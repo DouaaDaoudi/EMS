@@ -1,11 +1,15 @@
 from fastapi import FastAPI
 from app.db.mongo_db import get_database
 from app.core.settings import settings
+from app.routes.employees import router as employees_router
 
 
 def create_app():
 
-    app = FastAPI()
+    app = FastAPI(title="Employee Database API")
+
+    app.state.settings = settings
+    app.include_router(employees_router)
 
 
     
