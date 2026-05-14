@@ -1,14 +1,25 @@
-import pytest
+import pytest_asyncio
+from motor.motor_asyncio import AsyncIOMotorClient
+from httpx import AsyncClient, ASGITransport
+from app.main import app
+@pytest_asyncio.fixture
+async def test_db():
+    client = AsyncIOMotorClient("mongodb://localhost:27017")
+    db = client["test_employee_db"]
 
+    yield db
 
-@pytest.mark.asyncio
-async def test_mongo_connection_ping(test_db):
+    # await db["test_collection"].delete_many({})
+    client.close()
 
-    collection = test_db["people"]
+@pytest_asyncio.fixture
+async def client():
 
-    result = await test_db.command("ping")
+    transport = ASGITransport(app=app)
 
-    assert result["ok"] == 1.0
+    async with AsyncClient(
+        transport=transport,
+        base_url="http://test"
+    ) as ac:
 
-    # clear collection after test
-    await collection.delete_many({})
+        yield ac

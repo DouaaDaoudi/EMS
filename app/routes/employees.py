@@ -1,27 +1,16 @@
 from fastapi import APIRouter, HTTPException
-from app.models.employee import Employee
+from app.models.employee import Employee, EmployeeCreate
 from app.db.mongo_db import get_database
+
+from app.controller.employees import EmployeeController
+
 
 router = APIRouter(prefix="/employees", tags=["Employees"])
 
 
-@router.post("/")
-async def create_employee(employee: Employee):
-    db = get_database()
-
-    employee_data = employee.model_dump()
-
-    existing_employee = await db["employees"].find_one({"id": employee.id})
-
-    if existing_employee:
-        raise HTTPException(status_code=400, detail="Employee ID already exists")
-
-    await db["employees"].insert_one(employee_data)
-
-    return {
-        "message": "Employee created successfully",
-        "employee": employee_data
-    }
+@router.post("/", status_code=201)
+async def create_employee(employee: EmployeeCreate):
+    return await EmployeeController.create_employee(employee)
 
 
 @router.get("/")
@@ -43,7 +32,7 @@ async def get_employee(employee_id: int):
     db = get_database()
 
     employee = await db["employees"].find_one(
-        {"id": employee_id},
+        {"employee_id": employee_id},
         {"_id": 0}
     )
 

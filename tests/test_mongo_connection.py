@@ -21,12 +21,6 @@ async def test_mongo_connection_ping():
     assert retrieved_doc["name"] == test_doc["name"]
     assert retrieved_doc["age"] == test_doc["age"]
 
-    #test case
-
-
-
-    
-    #finish chapter two
 
 
       # using mock
@@ -39,3 +33,17 @@ async def test_mongo_connection_ping():
     result = await fake_client.admin.command("ping")
 
     assert result["ok"] == 1.0
+
+# test document insertion and retrieval
+@pytest.mark.asyncio
+async def test_mongo_insert_and_find(test_db):
+    
+    test_doc = {"name": "Douaa", "age": "32"}    
+    insert_result = await test_db.test_collection.insert_one(test_doc)
+    assert insert_result.inserted_id is not None
+
+    #retrieve the document and check if it matches the inserted one
+    retrieved_doc = await test_db.test_collection.find_one({"_id": insert_result.inserted_id})
+    assert retrieved_doc is not None
+    assert retrieved_doc["name"] == test_doc["name"]
+    assert retrieved_doc["age"] == test_doc["age"]
