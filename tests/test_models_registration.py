@@ -53,6 +53,7 @@ def test_employee_create_rejects_invalid_email():
 
 
 #test_employee_update_allows_all_optional_fields_none`
+#all the field exist but are optional and can be None, if you change the none the test will fail
 def test_employee_update_allows_all_optional_fields_none():
 
     employee = EmployeeUpdate(

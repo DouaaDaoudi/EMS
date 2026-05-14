@@ -16,7 +16,7 @@ createdAt: datetime.datetime = Field(
 )
 class EmployeeCreate(BaseModel):
     employee_id: str = Field(...,example="EMP123")
-    name: str = Field(...,example="John Doe")
+    name: str = Field(...,example="John Doe", min_length=2)
     email: EmailStr = Field(...,example="john.doe@example.com")
     position: str = Field(...,example="Software Engineer")
     department: str = Field(...,example="IT")
@@ -25,13 +25,15 @@ class EmployeeCreate(BaseModel):
 
 
 class EmployeeUpdate(BaseModel):
-    employee_id: Optional[str] = Field(...,example="EMP123")
-    name: Optional[str] = Field(...,example="John Doe")
-    email: Optional[EmailStr] = Field(...,example="john.doe@example.com")
-    position: Optional[str] = Field(...,example="Software Engineer")
-    department: Optional[str] = Field(...,example="IT")
-    updatedAt : Optional[datetime.datetime] = Field(default_factory= lambda: datetime.datetime.now(datetime.timezone.utc))
-    status : Optional[str] = Field(...,example="Active")
+    employee_id: Optional[str] = None
+    name: Optional[str] = Field(default=None, min_length=2, example="John Doe")
+    email: Optional[EmailStr] = Field(default=None, example="john.doe@example.com")
+    position: Optional[str] = Field(default=None, example="Software Engineer")
+    department: Optional[str] = Field(default=None, example="IT")
+    updatedAt: datetime.datetime = Field(
+        default_factory=lambda: datetime.datetime.now(datetime.timezone.utc)
+    )
+    status: Optional[str] = Field(default=None, example="Active")
 
 
 class EmployeeResponse(BaseModel):

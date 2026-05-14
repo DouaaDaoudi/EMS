@@ -1,9 +1,6 @@
-from fastapi import APIRouter, HTTPException
-from app.models.employee import Employee, EmployeeCreate
-from app.db.mongo_db import get_database
-
+from fastapi import APIRouter
+from app.models.employee import EmployeeCreate, EmployeeUpdate
 from app.controller.employees import EmployeeController
-
 
 router = APIRouter(prefix="/employees", tags=["Employees"])
 
@@ -15,28 +12,19 @@ async def create_employee(employee: EmployeeCreate):
 
 @router.get("/")
 async def get_employees():
-    db = get_database()
-
-    employees = []
-
-    cursor = db["employees"].find({}, {"_id": 0})
-
-    async for employee in cursor:
-        employees.append(employee)
-
-    return employees
+    return await EmployeeController.get_employees()
 
 
 @router.get("/{employee_id}")
-async def get_employee(employee_id: int):
-    db = get_database()
+async def get_employee(employee_id: str):
+    return await EmployeeController.get_employee(employee_id)
 
-    employee = await db["employees"].find_one(
-        {"employee_id": employee_id},
-        {"_id": 0}
-    )
 
-    if not employee:
-        raise HTTPException(status_code=404, detail="Employee not found")
+@router.delete("/{employee_id}")
+async def delete_employee(employee_id: str):
+    return await EmployeeController.delete_employee(employee_id)
 
-    return employee
+
+@router.put("/{employee_id}")
+async def update_employee(employee_id: str, updated_employee: EmployeeUpdate):
+    return await EmployeeController.update_employee(employee_id, updated_employee)
