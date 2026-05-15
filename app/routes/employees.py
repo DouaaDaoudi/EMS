@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from app.models.employee import EmployeeCreate, EmployeeUpdate
-from app.controller.employees import EmployeeController
+from app.controllers.employees import EmployeeController
 
 router = APIRouter(prefix="/employees", tags=["Employees"])
 

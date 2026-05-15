@@ -10,6 +10,8 @@ MONGO_DB_NAME = os.getenv("MONGO_DB_NAME")
 client = AsyncIOMotorClient(MONGO_URI)
 
 database = client[MONGO_DB_NAME]
+users_collection = database["users"]
+employees_collection = database["employees"]
 
 
 def get_database():
