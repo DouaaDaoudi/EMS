@@ -1,0 +1,79 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: linear-gradient(180deg, #4f6df5, #b64286, #ef1f2d);
+  min-height: 100vh;
+  color: #4b5563;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* login/register card */
+.auth-card {
+  width: 360px;
+  background: white;
+  padding: 36px 32px;
+  border-radius: 18px;
+  box-shadow: 0 10px 25px rgba(80, 0, 90, 0.35);
+  text-align: center;
+}
+
+.auth-title {
+  font-size: 30px;
+  font-weight: 300;
+  color: #7c6ee6;
+  letter-spacing: 3px;
+  margin-bottom: 24px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+input {
+  height: 38px;
+  padding: 0 12px;
+  border: 2px solid #9b8cff;
+  outline: none;
+  font-size: 14px;
+}
+
+button {
+  height: 42px;
+  border: none;
+  background: #6f5be8;
+  color: white;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #5a48c9;
+}
+
+.error {
+  color: #dc2626;
+  font-size: 14px;
+}
+
+.link-text {
+  margin-top: 16px;
+  font-size: 13px;
+}
+
+.link-text a {
+  color: #6f5be8;
+  text-decoration: none;
+}
